@@ -15,7 +15,7 @@ import java.net.URI;
 
 public class HTTPClient {
 
-    private static final String BACKEND = "http://localhost:3000";
+    private static final String BACKEND = "https://staging-plantstore.cloudcontrolapp.com";
     private static final int MAX_IDLE_CONNECTIONS = 20;
     private static final long KEEP_ALIVE_DURATION_MS = 300000L;
 
