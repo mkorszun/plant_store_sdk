@@ -41,4 +41,10 @@ for (Plant p : plants) {
 // Details of specific plant
 Plant plant = new PlantEndpoint().read(token.getToken(), 2);
 System.out.println(plant.getName());
+
+// List all kinds
+ArrayList<Kind> kinds = new KindEndpoint().list(token.getToken());
+for(Kind k : kinds) {
+    System.out.println(k.getName());
+}
 ~~~
