@@ -6,6 +6,9 @@ import java.io.Serializable;
 
 public class Kind implements Serializable {
 
+    @JsonProperty("id")
+    private long id;
+
     @JsonProperty("name")
     private String name;
 
@@ -14,6 +17,14 @@ public class Kind implements Serializable {
 
     @JsonProperty("global_treatment")
     private Treatment treatment;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
