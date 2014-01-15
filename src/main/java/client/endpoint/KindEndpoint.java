@@ -12,7 +12,7 @@ public class KindEndpoint extends Endpoint {
 
     public ArrayList<Kind> list(String token) throws IOException, HTTPClientException {
         QueryParamsBuilder builder = new QueryParamsBuilder();
-        byte[] body = httpClient.request("api/" + token + "/kind", builder.build());
+        byte[] body = httpClient.request("GET", "api/" + token + "/kind", builder.build());
         return mapper.<ArrayList>readValue(body, new TypeReference<ArrayList<Kind>>() {
         });
     }

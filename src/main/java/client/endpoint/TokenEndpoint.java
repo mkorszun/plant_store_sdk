@@ -11,7 +11,7 @@ public class TokenEndpoint extends Endpoint {
     public Token getToken(String email, String password) throws IOException, HTTPClientException {
         QueryParamsBuilder builder = new QueryParamsBuilder();
         builder.set("email", email).set("password", password);
-        byte[] body = httpClient.request("api/token", builder.build());
+        byte[] body = httpClient.request("GET", "api/token", builder.build());
         return mapper.readValue(body, Token.class);
     }
 }

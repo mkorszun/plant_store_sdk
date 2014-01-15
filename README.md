@@ -29,7 +29,7 @@ $ mvn deploy
 
 ~~~java
 // Get token (authorize with service username / password)
-Token token = new TokenEndpoint().getToken("mkorszun@gmail.com", "dupadupa");
+Token token = new TokenEndpoint().getToken("EMAIL", "PASSWORD");
 System.out.println(token.getToken());
 
 // List all user plants
@@ -39,12 +39,16 @@ for (Plant p : plants) {
 }
 
 // Details of specific plant
-Plant plant = new PlantEndpoint().read(token.getToken(), 2);
+Plant plant = new PlantEndpoint().read(token.getToken(), 5);
 System.out.println(plant.getName());
+
+// Create plant
+NewPlantRequest request = new NewPlantRequest("stokrotka", "blabla", 8);
+new PlantEndpoint().create(token.getToken(), request);
 
 // List all kinds
 ArrayList<Kind> kinds = new KindEndpoint().list(token.getToken());
-for(Kind k : kinds) {
+for (Kind k : kinds) {
     System.out.println(k.getName());
 }
 ~~~
