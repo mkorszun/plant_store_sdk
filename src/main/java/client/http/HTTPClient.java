@@ -18,12 +18,17 @@ public class HTTPClient {
 
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_JSON = "application/json";
-    private static final String BACKEND = "https://staging-plantstore.cloudcontrolled.com";
-
     private static final int MAX_IDLE_CONNECTIONS = 20;
+
     private static final long KEEP_ALIVE_DURATION_MS = 300000L;
 
     private OkHttpClient client;
+    private String backendURL = "https://staging-plantstore.cloudcontrolled.com";
+
+    public HTTPClient(String backendURL) {
+        this();
+        this.backendURL = backendURL;
+    }
 
     public HTTPClient() {
         this.client = new OkHttpClient();
@@ -36,7 +41,7 @@ public class HTTPClient {
         HttpURLConnection connection = null;
 
         try {
-            URI uri = Utils.buildURI(BACKEND, resource, params);
+            URI uri = Utils.buildURI(backendURL, resource, params);
             connection = client.open(uri.toURL());
             connection.setRequestMethod(method);
             connection.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
@@ -62,7 +67,7 @@ public class HTTPClient {
         HttpURLConnection connection = null;
 
         try {
-            URI uri = Utils.buildURI(BACKEND, resource, params);
+            URI uri = Utils.buildURI(backendURL, resource, params);
             connection = client.open(uri.toURL());
             connection.setRequestMethod(method);
             return read(connection);

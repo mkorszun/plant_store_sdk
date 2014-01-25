@@ -1,5 +1,6 @@
 package client.endpoint;
 
+import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import client.request.NewPlantRequest;
 import client.utils.QueryParamsBuilder;
@@ -11,6 +12,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlantEndpoint extends Endpoint {
+
+    public PlantEndpoint() {
+
+    }
+
+    public PlantEndpoint(HTTPClient client) {
+        super(client);
+    }
 
     public ArrayList<Plant> list(String token) throws IOException, HTTPClientException {
         QueryParamsBuilder builder = new QueryParamsBuilder();

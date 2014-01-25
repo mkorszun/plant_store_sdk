@@ -1,5 +1,6 @@
 package client.endpoint;
 
+import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import client.utils.QueryParamsBuilder;
 import model.Kind;
@@ -9,6 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class KindEndpoint extends Endpoint {
+
+    public KindEndpoint() {
+
+    }
+
+    public KindEndpoint(HTTPClient client) {
+        super(client);
+    }
 
     public ArrayList<Kind> list(String token) throws IOException, HTTPClientException {
         QueryParamsBuilder builder = new QueryParamsBuilder();

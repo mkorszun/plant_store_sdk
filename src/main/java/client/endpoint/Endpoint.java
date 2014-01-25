@@ -12,4 +12,9 @@ public class Endpoint {
         this.httpClient = new HTTPClient();
         this.mapper = new ObjectMapper();
     }
+
+    protected Endpoint(HTTPClient client) {
+        this.httpClient = client;
+        this.mapper = new ObjectMapper();
+    }
 }

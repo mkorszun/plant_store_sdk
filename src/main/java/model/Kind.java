@@ -41,4 +41,12 @@ public class Kind implements Serializable {
     public void setLatinName(String latinName) {
         this.latinName = latinName;
     }
+
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
 }
