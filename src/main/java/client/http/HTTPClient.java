@@ -5,25 +5,25 @@ import client.utils.Utils;
 import com.squareup.okhttp.ConnectionPool;
 import com.squareup.okhttp.OkHttpClient;
 
-import javax.ws.rs.core.MultivaluedMap;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.Map;
 
 public class HTTPClient {
 
+    private static final String BACKEND_URL = "https://staging-plantstore.cloudcontrolled.com";
+
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_JSON = "application/json";
-    private static final int MAX_IDLE_CONNECTIONS = 20;
 
+    private static final int MAX_IDLE_CONNECTIONS = 20;
     private static final long KEEP_ALIVE_DURATION_MS = 300000L;
 
     private OkHttpClient client;
-    private String backendURL = "https://staging-plantstore.cloudcontrolled.com";
+    private String backendURL = BACKEND_URL;
 
     public HTTPClient(String backendURL) {
         this();
@@ -35,19 +35,34 @@ public class HTTPClient {
         this.client.setConnectionPool(new ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION_MS));
     }
 
-    public byte[] request(String method, String resource, byte[] body, MultivaluedMap<String, String> params) throws IOException, HTTPClientException {
+    public byte[] request(String method, String resource) throws IOException, HTTPClientException {
+        return request(method, Utils.buildURI(backendURL, resource));
+    }
 
+    public byte[] request(String method, String resource, Map<String, String> params) throws IOException, HTTPClientException {
+        return request(method, Utils.buildURI(backendURL, resource, params));
+    }
+
+    public byte[] request(String method, String resource, byte[] body) throws IOException, HTTPClientException {
+        return request(method, Utils.buildURI(backendURL, resource), body);
+    }
+
+    public byte[] request(String method, String resource, byte[] body, Map<String, String> params) throws IOException, HTTPClientException {
+        return request(method, Utils.buildURI(backendURL, resource, params), body);
+    }
+
+    private byte[] request(String method, URI resource, byte[] body) throws IOException, HTTPClientException {
         OutputStream out = null;
         HttpURLConnection connection = null;
 
         try {
-            URI uri = Utils.buildURI(backendURL, resource, params);
-            connection = client.open(uri.toURL());
+            connection = client.open(resource.toURL());
             connection.setRequestMethod(method);
             connection.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
             out = connection.getOutputStream();
             out.write(body);
-            return read(connection);
+            HTTPStream stream = new HTTPStream(connection);
+            return stream.read();
         } catch (MalformedURLException e) {
             throw new HTTPClientException(e);
         } finally {
@@ -62,15 +77,14 @@ public class HTTPClient {
         }
     }
 
-    public byte[] request(String method, String resource, MultivaluedMap<String, String> params) throws IOException, HTTPClientException {
-
+    private byte[] request(String method, URI resource) throws IOException, HTTPClientException {
         HttpURLConnection connection = null;
 
         try {
-            URI uri = Utils.buildURI(backendURL, resource, params);
-            connection = client.open(uri.toURL());
+            connection = client.open(resource.toURL());
             connection.setRequestMethod(method);
-            return read(connection);
+            HTTPStream stream = new HTTPStream(connection);
+            return stream.read();
         } catch (MalformedURLException e) {
             throw new HTTPClientException(e);
         } finally {
@@ -79,29 +93,6 @@ public class HTTPClient {
                 connection.disconnect();
             }
 
-        }
-    }
-
-    private byte[] read(HttpURLConnection connection) throws IOException, HTTPClientException {
-        if (connection.getResponseCode() == 200 || connection.getResponseCode() == 201) {
-            return readFully(connection.getInputStream());
-        } else {
-            throw new HTTPClientException(connection.getResponseMessage());
-        }
-    }
-
-    private byte[] readFully(InputStream in) throws IOException, HTTPClientException {
-        try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            for (int count; (count = in.read(buffer)) != -1; ) {
-                out.write(buffer, 0, count);
-            }
-            return out.toByteArray();
-        } finally {
-            if (in != null) {
-                in.close();
-            }
         }
     }
 }

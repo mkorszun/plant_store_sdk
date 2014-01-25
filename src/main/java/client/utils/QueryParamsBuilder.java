@@ -1,16 +1,15 @@
 package client.utils;
 
-import com.sun.jersey.core.util.MultivaluedMapImpl;
-
-import javax.ws.rs.core.MultivaluedMap;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QueryParamsBuilder {
 
-    MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+    Map<String, String> params = new HashMap<>();
 
     public QueryParamsBuilder set(String key, String val) {
-        params.add(key, URLEncoder.encode(val));
+        params.put(key, URLEncoder.encode(val));
         return this;
     }
 
@@ -24,7 +23,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public MultivaluedMap build() {
+    public Map<String, String> build() {
         return params;
     }
 }

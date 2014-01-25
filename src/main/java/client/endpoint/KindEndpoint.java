@@ -2,7 +2,6 @@ package client.endpoint;
 
 import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
-import client.utils.QueryParamsBuilder;
 import com.google.common.base.Joiner;
 import model.Kind;
 import org.codehaus.jackson.type.TypeReference;
@@ -21,8 +20,7 @@ public class KindEndpoint extends Endpoint {
     }
 
     public ArrayList<Kind> list(String token) throws IOException, HTTPClientException {
-        QueryParamsBuilder builder = new QueryParamsBuilder();
-        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "kind").toString(), builder.build());
+        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "kind").toString());
         return mapper.<ArrayList>readValue(body, new TypeReference<ArrayList<Kind>>() {
         });
     }

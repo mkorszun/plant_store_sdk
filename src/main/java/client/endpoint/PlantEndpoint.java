@@ -3,7 +3,6 @@ package client.endpoint;
 import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import client.request.NewPlantRequest;
-import client.utils.QueryParamsBuilder;
 import com.google.common.base.Joiner;
 import model.Plant;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -23,21 +22,18 @@ public class PlantEndpoint extends Endpoint {
     }
 
     public ArrayList<Plant> list(String token) throws IOException, HTTPClientException {
-        QueryParamsBuilder builder = new QueryParamsBuilder();
-        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "plant").toString(), builder.build());
+        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "plant").toString());
         return mapper.<ArrayList>readValue(body, new TypeReference<ArrayList<Plant>>() {
         });
     }
 
     public Plant read(String token, long id) throws IOException, HTTPClientException {
-        QueryParamsBuilder builder = new QueryParamsBuilder();
-        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "plant", id).toString(), builder.build());
+        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "plant", id).toString());
         return mapper.readValue(body, Plant.class);
     }
 
     public void create(String token, NewPlantRequest plant) throws IOException, HTTPClientException {
-        QueryParamsBuilder builder = new QueryParamsBuilder();
         byte[] input = new ObjectMapper().writeValueAsBytes(plant);
-        httpClient.request("POST", Joiner.on("/").join("api", token, "plant").toString(), input, builder.build());
+        httpClient.request("POST", Joiner.on("/").join("api", token, "plant").toString(), input);
     }
 }
