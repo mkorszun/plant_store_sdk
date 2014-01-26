@@ -2,57 +2,45 @@ package client.endpoint;
 
 import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
-import com.github.restdriver.clientdriver.ClientDriverRequest;
-import com.github.restdriver.clientdriver.ClientDriverRule;
+import model.ErrorFixture;
 import model.Kind;
-import model.KindFixture;
-import model.TreatmentFixture;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import model.KindsListBuilder;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.github.restdriver.clientdriver.RestClientDriver.giveResponse;
-import static com.github.restdriver.clientdriver.RestClientDriver.onRequestTo;
-
-public class KindEndpointTest {
+public class KindEndpointTest extends EndpointTest {
 
     @Rule
-    public ClientDriverRule driver = new ClientDriverRule();
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void testListKindsJsonError() throws IOException, HTTPClientException {
+        exception.expect(HTTPClientException.class);
+        exception.expectMessage("invalid_token");
+        String body = new ErrorFixture().withReason("invalid_token").build();
+        setupDriver("/api/123456/kind", body, 401, "application/json");
+        new KindEndpoint(new HTTPClient(driver.getBaseUrl())).list("123456");
+    }
+
+    @Test
+    public void testListKindsPlainError() throws IOException, HTTPClientException {
+        exception.expect(HTTPClientException.class);
+        exception.expectMessage("Unauthorized");
+        setupDriver("/api/123456/kind", "", 401, "text/plain");
+        new KindEndpoint(new HTTPClient(driver.getBaseUrl())).list("123456");
+    }
 
     @Test
     public void testListKindsOK() throws IOException, HTTPClientException {
 
-        JSONObject treatment = new TreatmentFixture()
-                .withWatering("moderate")
-                .withInsolation("indirect")
-                .withTemperatureMin(14)
-                .withTemperatureMax(21)
-                .withHumidity("low")
-                .withComment(null)
-                .build();
-
-        JSONObject kind = new KindFixture()
-                .withId(1)
-                .withName("Gerbera")
-                .withLatinName("Gerbera jamesonii")
-                .withTreatment(treatment)
-                .build();
-
-        JSONArray resp = new JSONArray();
-        resp.add(kind);
-
-        driver.addExpectation(
-                onRequestTo("/api/123456/kind")
-                        .withMethod(ClientDriverRequest.Method.GET),
-                giveResponse(resp.toJSONString())
-                        .withStatus(200));
-
+        setupDriver("/api/123456/kind", KindsListBuilder.build(), 200, "application/json");
         KindEndpoint client = new KindEndpoint(new HTTPClient(driver.getBaseUrl()));
+
         ArrayList<Kind> kinds = client.list("123456");
         Assert.assertEquals(1, kinds.size());
         Assert.assertEquals(1, kinds.get(0).getId());

@@ -1,13 +1,17 @@
 package client.utils;
 
+import client.http.exception.HTTPClientException;
+
 import javax.ws.rs.core.UriBuilder;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.Map;
 
 public class Utils {
 
     public static URI buildURI(String backend, String resource) {
-
         UriBuilder builder = UriBuilder.fromPath(backend);
         builder.path(resource);
         return builder.build();
@@ -22,5 +26,24 @@ public class Utils {
         }
 
         return builder.build();
+    }
+
+    public static boolean in(String a, String b) {
+        return a.toLowerCase().contains(b.toLowerCase());
+    }
+
+    public static byte[] readBytes(InputStream in) throws IOException, HTTPClientException {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int count; (count = in.read(buffer)) != -1; ) {
+                out.write(buffer, 0, count);
+            }
+            return out.toByteArray();
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
     }
 }
