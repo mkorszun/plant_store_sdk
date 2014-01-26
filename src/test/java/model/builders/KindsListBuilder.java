@@ -1,5 +1,7 @@
-package model;
+package model.builders;
 
+import model.KindFixture;
+import model.TreatmentFixture;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

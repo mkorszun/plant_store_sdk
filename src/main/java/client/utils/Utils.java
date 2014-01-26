@@ -17,11 +17,11 @@ public class Utils {
         return builder.build();
     }
 
-    public static URI buildURI(String backend, String resource, Map<String, String> params) {
+    public static URI buildURI(String backend, String resource, Map<String, Object> params) {
         UriBuilder builder = UriBuilder.fromPath(backend);
         builder.path(resource);
 
-        for (Map.Entry<String, String> e : params.entrySet()) {
+        for (Map.Entry<String, Object> e : params.entrySet()) {
             builder.queryParam(e.getKey(), e.getValue());
         }
 

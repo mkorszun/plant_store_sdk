@@ -4,7 +4,7 @@ import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import model.ErrorFixture;
 import model.Kind;
-import model.KindsListBuilder;
+import model.builders.KindsListBuilder;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

@@ -39,7 +39,7 @@ public class HTTPClient {
         return request(method, Utils.buildURI(backendURL, resource));
     }
 
-    public byte[] request(String method, String resource, Map<String, String> params) throws IOException, HTTPClientException {
+    public byte[] request(String method, String resource, Map<String, Object> params) throws IOException, HTTPClientException {
         return request(method, Utils.buildURI(backendURL, resource, params));
     }
 
@@ -47,7 +47,7 @@ public class HTTPClient {
         return request(method, Utils.buildURI(backendURL, resource), body);
     }
 
-    public byte[] request(String method, String resource, byte[] body, Map<String, String> params) throws IOException, HTTPClientException {
+    public byte[] request(String method, String resource, byte[] body, Map<String, Object> params) throws IOException, HTTPClientException {
         return request(method, Utils.buildURI(backendURL, resource, params), body);
     }
 

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class QueryParamsBuilder {
 
-    Map<String, String> params = new HashMap<>();
+    Map<String, Object> params = new HashMap<String, Object>();
 
     public QueryParamsBuilder set(String key, String val) {
         params.put(key, URLEncoder.encode(val));
@@ -23,7 +23,7 @@ public class QueryParamsBuilder {
         return this;
     }
 
-    public Map<String, String> build() {
+    public Map<String, Object> build() {
         return params;
     }
 }
