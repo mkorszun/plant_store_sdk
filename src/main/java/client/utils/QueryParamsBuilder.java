@@ -1,24 +1,26 @@
 package client.utils;
 
-import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.net.URLEncoder.encode;
 
 public class QueryParamsBuilder {
 
     Map<String, Object> params = new HashMap<String, Object>();
 
-    public QueryParamsBuilder set(String key, String val) {
-        params.put(key, URLEncoder.encode(val));
+    public QueryParamsBuilder set(String key, String val) throws UnsupportedEncodingException {
+        params.put(key, encode(val, "UTF-8"));
         return this;
     }
 
-    public QueryParamsBuilder set(String key, long val) {
+    public QueryParamsBuilder set(String key, long val) throws UnsupportedEncodingException {
         set(key, Long.toString(val));
         return this;
     }
 
-    public QueryParamsBuilder set(String key, boolean val) {
+    public QueryParamsBuilder set(String key, boolean val) throws UnsupportedEncodingException {
         set(key, String.valueOf(val));
         return this;
     }
