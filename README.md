@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mkorszun/plant_store_sdk.png?branch=master)](https://travis-ci.org/mkorszun/plant_store_sdk)
+
 # Plant Store Java SDK
 
 ## Installation:
