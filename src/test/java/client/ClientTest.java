@@ -1,4 +1,4 @@
-package client.endpoint;
+package client;
 
 import com.github.restdriver.clientdriver.ClientDriverRequest;
 import com.github.restdriver.clientdriver.ClientDriverRule;
@@ -9,7 +9,7 @@ import java.util.Map;
 import static com.github.restdriver.clientdriver.RestClientDriver.giveResponse;
 import static com.github.restdriver.clientdriver.RestClientDriver.onRequestTo;
 
-public class EndpointTest {
+public class ClientTest {
 
     @Rule
     public ClientDriverRule driver = new ClientDriverRule();

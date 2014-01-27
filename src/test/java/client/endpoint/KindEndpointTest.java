@@ -1,5 +1,6 @@
 package client.endpoint;
 
+import client.ClientTest;
 import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import model.ErrorFixture;
@@ -13,25 +14,17 @@ import org.junit.rules.ExpectedException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class KindEndpointTest extends EndpointTest {
+public class KindEndpointTest extends ClientTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testListKindsJsonError() throws IOException, HTTPClientException {
+    public void testListKindsError() throws IOException, HTTPClientException {
         exception.expect(HTTPClientException.class);
         exception.expectMessage("invalid_token");
         String body = new ErrorFixture().withReason("invalid_token").build();
         setupDriver("/api/123456/kind", body, 401, "application/json");
-        new KindEndpoint(new HTTPClient(driver.getBaseUrl())).list("123456");
-    }
-
-    @Test
-    public void testListKindsPlainError() throws IOException, HTTPClientException {
-        exception.expect(HTTPClientException.class);
-        exception.expectMessage("Unauthorized");
-        setupDriver("/api/123456/kind", "", 401, "text/plain");
         new KindEndpoint(new HTTPClient(driver.getBaseUrl())).list("123456");
     }
 
