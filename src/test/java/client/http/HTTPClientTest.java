@@ -4,16 +4,11 @@ import client.ClientTest;
 import client.http.exception.HTTPClientException;
 import model.ErrorFixture;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 
 public class HTTPClientTest extends ClientTest {
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testOK() throws IOException, HTTPClientException {

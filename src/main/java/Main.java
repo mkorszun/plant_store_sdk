@@ -15,28 +15,29 @@ public class Main {
     public static void main(String... args) throws IOException, HTTPClientException {
 
         // Get token (authorize with service username / password)
-        Token token = new TokenEndpoint().getToken("EMAIL", "PASSWORD");
+        Token token = new TokenEndpoint().getToken("EMAIL", "PASS");
         System.out.println(token.getToken());
 
+        PlantEndpoint plantEndpoint = new PlantEndpoint();
+
         // List all user plants
-        ArrayList<Plant> plants = new PlantEndpoint().list(token.getToken());
+        ArrayList<Plant> plants = plantEndpoint.list(token.getToken());
         for (Plant p : plants) {
             System.out.println(p.getDescription());
         }
 
         // Details of specific plant
-        Plant plant = new PlantEndpoint().read(token.getToken(), 2);
+        Plant plant = plantEndpoint.read(token.getToken(), 2);
         System.out.println(plant.getName());
 
         // Create plant
         NewPlantRequest request = new NewPlantRequest("stokrotka", "blabla", 8);
-        new PlantEndpoint().create(token.getToken(), request);
+        plantEndpoint.create(token.getToken(), request);
 
         // List all kinds
         ArrayList<Kind> kinds = new KindEndpoint().list(token.getToken());
         for (Kind k : kinds) {
             System.out.println(k.getName());
         }
-
     }
 }

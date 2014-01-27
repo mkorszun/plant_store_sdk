@@ -2,12 +2,11 @@ package model.builders;
 
 import model.KindFixture;
 import model.TreatmentFixture;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class KindsListBuilder {
+public class KindBuilder {
 
-    public static String build() {
+    public static JSONObject buildKind() {
         JSONObject treatment = new TreatmentFixture()
                 .withWatering("moderate")
                 .withInsolation("indirect")
@@ -17,15 +16,11 @@ public class KindsListBuilder {
                 .withComment(null)
                 .build();
 
-        JSONObject kind = new KindFixture()
+        return new KindFixture()
                 .withId(1)
                 .withName("Gerbera")
                 .withLatinName("Gerbera jamesonii")
                 .withTreatment(treatment)
                 .build();
-
-        JSONArray resp = new JSONArray();
-        resp.add(kind);
-        return resp.toJSONString();
     }
 }

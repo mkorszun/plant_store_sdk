@@ -5,19 +5,17 @@ import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import model.ErrorFixture;
 import model.Kind;
-import model.builders.KindsListBuilder;
+import model.builders.KindBuilder;
+import org.json.simple.JSONArray;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class KindEndpointTest extends ClientTest {
+import static java.util.Arrays.asList;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+public class KindEndpointTest extends ClientTest {
 
     @Test
     public void testListKindsError() throws IOException, HTTPClientException {
@@ -31,7 +29,8 @@ public class KindEndpointTest extends ClientTest {
     @Test
     public void testListKindsOK() throws IOException, HTTPClientException {
 
-        setupDriver("/api/123456/kind", KindsListBuilder.build(), 200, "application/json");
+        String body = JSONArray.toJSONString(asList(KindBuilder.buildKind()));
+        setupDriver("/api/123456/kind", body, 200, "application/json");
         KindEndpoint client = new KindEndpoint(new HTTPClient(driver.getBaseUrl()));
 
         ArrayList<Kind> kinds = client.list("123456");

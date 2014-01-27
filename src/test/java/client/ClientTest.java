@@ -3,6 +3,7 @@ package client;
 import com.github.restdriver.clientdriver.ClientDriverRequest;
 import com.github.restdriver.clientdriver.ClientDriverRule;
 import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 import java.util.Map;
 
@@ -10,6 +11,9 @@ import static com.github.restdriver.clientdriver.RestClientDriver.giveResponse;
 import static com.github.restdriver.clientdriver.RestClientDriver.onRequestTo;
 
 public class ClientTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Rule
     public ClientDriverRule driver = new ClientDriverRule();

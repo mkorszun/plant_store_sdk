@@ -8,16 +8,11 @@ import model.ErrorFixture;
 import model.Token;
 import model.TokenFixture;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 
 public class TokenEndpointTest extends ClientTest {
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testGetTokenError() throws IOException, HTTPClientException {
