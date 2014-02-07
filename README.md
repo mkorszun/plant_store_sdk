@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/mkorszun/plant_store_sdk.png?branch=master)](https://travis-ci.org/mkorszun/plant_store_sdk)
-[![Coverage Status](https://coveralls.io/repos/mkorszun/plant_store_sdk/badge.png)](https://coveralls.io/r/mkorszun/plant_store_sdk)
+[![Coverage Status](https://coveralls.io/repos/mkorszun/plant_store_sdk/badge.png?branch=master)](https://coveralls.io/r/mkorszun/plant_store_sdk?branch=master)
 # Plant Store Java SDK
 
 ## Installation:
@@ -23,7 +23,7 @@ $ mvn deploy
 <dependency>
     <groupId>plant_store_sdk</groupId>
     <artifactId>plant_store_sdk</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.4</version>
 </dependency>
 ~~~
 
