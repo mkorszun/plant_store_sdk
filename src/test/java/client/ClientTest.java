@@ -31,7 +31,7 @@ public class ClientTest {
         );
     }
 
-    public void setupDriver(ClientDriverRequest.Method method, String url, int code, String contentType) {
+    public void setupDriver(ClientDriverRequest.Method method, String url, String expectedBody, int code, String contentType) {
         driver.addExpectation(
                 onRequestTo(url).withMethod(method),
                 giveEmptyResponse().withStatus(code).withContentType(contentType)
