@@ -38,10 +38,15 @@ public class KindEndpointTest extends ClientTest {
         Assert.assertEquals(1, kinds.get(0).getId());
         Assert.assertEquals("Gerbera", kinds.get(0).getName());
         Assert.assertEquals("Gerbera jamesonii", kinds.get(0).getLatinName());
-        Assert.assertEquals("moderate", kinds.get(0).getTreatment().getWatering());
+        Assert.assertEquals("moderate", kinds.get(0).getTreatment().getWateringSeason());
+        Assert.assertEquals("plentiful", kinds.get(0).getTreatment().getWateringRest());
+        Assert.assertEquals(true, kinds.get(0).getTreatment().isDryBetweenWateringInSeason());
+        Assert.assertEquals(false, kinds.get(0).getTreatment().isDryBetweenWateringInRest());
         Assert.assertEquals("indirect", kinds.get(0).getTreatment().getInsolation());
-        Assert.assertEquals(14, kinds.get(0).getTreatment().getTemperatureMin());
-        Assert.assertEquals(21, kinds.get(0).getTreatment().getTemperatureMax());
+        Assert.assertEquals(14, kinds.get(0).getTreatment().getSeasonTempMin());
+        Assert.assertEquals(21, kinds.get(0).getTreatment().getSeasonTempMax());
+        Assert.assertEquals(10, kinds.get(0).getTreatment().getRestTempMin());
+        Assert.assertEquals(16, kinds.get(0).getTreatment().getRestTempMax());
         Assert.assertEquals("low", kinds.get(0).getTreatment().getHumidity());
         Assert.assertEquals(null, kinds.get(0).getTreatment().getComment());
     }

@@ -6,17 +6,32 @@ import java.io.Serializable;
 
 public class Treatment implements Serializable {
 
-    @JsonProperty("watering")
-    private String watering;
+    @JsonProperty("watering_season")
+    private String wateringSeason;
+
+    @JsonProperty("watering_rest")
+    private String wateringRest;
+
+    @JsonProperty("dry_between_watering_season")
+    private boolean dryBetweenWateringInSeason;
+
+    @JsonProperty("dry_between_watering_rest")
+    private boolean dryBetweenWateringInRest;
 
     @JsonProperty("insolation")
     private String insolation;
 
-    @JsonProperty("temperature_min")
-    private int temperatureMin;
+    @JsonProperty("season_temp_min")
+    private int seasonTempMin;
 
-    @JsonProperty("temperature_max")
-    private int temperatureMax;
+    @JsonProperty("season_temp_max")
+    private int seasonTempMax;
+
+    @JsonProperty("rest_temp_min")
+    private int restTempMin;
+
+    @JsonProperty("rest_temp_max")
+    private int restTempMax;
 
     @JsonProperty("humidity")
     private String humidity;
@@ -24,12 +39,36 @@ public class Treatment implements Serializable {
     @JsonProperty("comment")
     private String comment;
 
-    public String getWatering() {
-        return watering;
+    public String getWateringSeason() {
+        return wateringSeason;
     }
 
-    public void setWatering(String watering) {
-        this.watering = watering;
+    public void setWateringSeason(String wateringSeason) {
+        this.wateringSeason = wateringSeason;
+    }
+
+    public String getWateringRest() {
+        return wateringRest;
+    }
+
+    public void setWateringRest(String wateringRest) {
+        this.wateringRest = wateringRest;
+    }
+
+    public boolean isDryBetweenWateringInSeason() {
+        return dryBetweenWateringInSeason;
+    }
+
+    public void setDryBetweenWateringInSeason(boolean dryBetweenWateringInSeason) {
+        this.dryBetweenWateringInSeason = dryBetweenWateringInSeason;
+    }
+
+    public boolean isDryBetweenWateringInRest() {
+        return dryBetweenWateringInRest;
+    }
+
+    public void setDryBetweenWateringInRest(boolean dryBetweenWateringInRest) {
+        this.dryBetweenWateringInRest = dryBetweenWateringInRest;
     }
 
     public String getInsolation() {
@@ -40,20 +79,36 @@ public class Treatment implements Serializable {
         this.insolation = insolation;
     }
 
-    public int getTemperatureMin() {
-        return temperatureMin;
+    public int getSeasonTempMin() {
+        return seasonTempMin;
     }
 
-    public void setTemperatureMin(int temperatureMin) {
-        this.temperatureMin = temperatureMin;
+    public void setSeasonTempMin(int seasonTempMin) {
+        this.seasonTempMin = seasonTempMin;
     }
 
-    public int getTemperatureMax() {
-        return temperatureMax;
+    public int getSeasonTempMax() {
+        return seasonTempMax;
     }
 
-    public void setTemperatureMax(int temperatureMax) {
-        this.temperatureMax = temperatureMax;
+    public void setSeasonTempMax(int seasonTempMax) {
+        this.seasonTempMax = seasonTempMax;
+    }
+
+    public int getRestTempMin() {
+        return restTempMin;
+    }
+
+    public void setRestTempMin(int restTempMin) {
+        this.restTempMin = restTempMin;
+    }
+
+    public int getRestTempMax() {
+        return restTempMax;
+    }
+
+    public void setRestTempMax(int restTempMax) {
+        this.restTempMax = restTempMax;
     }
 
     public String getHumidity() {
