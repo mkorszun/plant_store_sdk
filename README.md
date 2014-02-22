@@ -25,6 +25,11 @@ $ mvn deploy
     <artifactId>plant_store_sdk</artifactId>
     <version>0.0.6</version>
 </dependency>
+...
+<repository>
+    <id>plant_store_sdk_repo</id>
+    <url>https://github.com/mkorszun/plant_store_sdk/raw/master/repo</url>
+</repository>
 ~~~
 
 ## Example usage:
