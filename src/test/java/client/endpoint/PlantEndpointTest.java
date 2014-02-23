@@ -4,8 +4,8 @@ import client.ClientTest;
 import client.http.HTTPClient;
 import client.http.exception.HTTPClientException;
 import client.request.NewPlantRequest;
-import com.github.restdriver.clientdriver.ClientDriverRequest;
 import client.request.NewPlantRequestFixture;
+import com.github.restdriver.clientdriver.ClientDriverRequest;
 import model.Plant;
 import model.PlantFixture;
 import org.json.simple.JSONArray;
@@ -20,6 +20,13 @@ import static java.util.Arrays.asList;
 import static model.builders.KindBuilder.buildKind;
 
 public class PlantEndpointTest extends ClientTest {
+
+    @Test
+    public void readPlantEmpty() throws IOException, HTTPClientException {
+        setupDriver("/api/123/plant/1", "null", 200, "application/json");
+        Plant plant = new PlantEndpoint(new HTTPClient(driver.getBaseUrl())).read("123", 1);
+        Assert.assertEquals(null, plant);
+    }
 
     @Test
     public void readPlant() throws IOException, HTTPClientException {
@@ -37,6 +44,13 @@ public class PlantEndpointTest extends ClientTest {
         setupDriver(ClientDriverRequest.Method.POST, "/api/123/plant", expectedBody, 201, "application/json");
         NewPlantRequest request = new NewPlantRequest("name", "desc", 1232131);
         new PlantEndpoint(new HTTPClient(driver.getBaseUrl())).create("123", request);
+    }
+
+    @Test
+    public void listPlantsEmpty() throws IOException, HTTPClientException {
+        setupDriver("/api/123/plant", "[]", 200, "application/json");
+        List<Plant> plants = new PlantEndpoint(new HTTPClient(driver.getBaseUrl())).list("123");
+        Assert.assertEquals(0, plants.size());
     }
 
     @Test
