@@ -1,4 +1,4 @@
-package model;
+package client.fixtures;
 
 import org.json.simple.JSONObject;
 

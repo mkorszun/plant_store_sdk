@@ -1,9 +1,10 @@
 package client.endpoint;
 
-import client.http.HTTPClient;
-import client.http.exception.HTTPClientException;
+import client.model.Kind;
 import com.google.common.base.Joiner;
-import model.Kind;
+import com.okrest.http.HTTPClient;
+import com.okrest.http.HTTPException;
+import com.okrest.http.HTTPMethod;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ public class KindEndpoint extends Endpoint {
         super(client);
     }
 
-    public ArrayList<Kind> list(String token) throws IOException, HTTPClientException {
-        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "kind").toString());
+    public ArrayList<Kind> list(String token) throws IOException, HTTPException {
+        byte[] body = httpClient.request(HTTPMethod.GET, Joiner.on("/").join("api", token, "kind").toString());
         return mapper.<ArrayList>readValue(body, new TypeReference<ArrayList<Kind>>() {
         });
     }

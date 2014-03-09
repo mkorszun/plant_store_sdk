@@ -1,10 +1,11 @@
 package client.endpoint;
 
-import client.http.HTTPClient;
-import client.http.exception.HTTPClientException;
+import client.model.Plant;
 import client.request.NewPlantRequest;
 import com.google.common.base.Joiner;
-import model.Plant;
+import com.okrest.http.HTTPClient;
+import com.okrest.http.HTTPException;
+import com.okrest.http.HTTPMethod;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -21,19 +22,19 @@ public class PlantEndpoint extends Endpoint {
         super(client);
     }
 
-    public ArrayList<Plant> list(String token) throws IOException, HTTPClientException {
-        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "plant").toString());
+    public ArrayList<Plant> list(String token) throws IOException, HTTPException {
+        byte[] body = httpClient.request(HTTPMethod.GET, Joiner.on("/").join("api", token, "plant").toString());
         return mapper.<ArrayList>readValue(body, new TypeReference<ArrayList<Plant>>() {
         });
     }
 
-    public Plant read(String token, long id) throws IOException, HTTPClientException {
-        byte[] body = httpClient.request("GET", Joiner.on("/").join("api", token, "plant", id).toString());
+    public Plant read(String token, long id) throws IOException, HTTPException {
+        byte[] body = httpClient.request(HTTPMethod.GET, Joiner.on("/").join("api", token, "plant", id).toString());
         return mapper.readValue(body, Plant.class);
     }
 
-    public void create(String token, NewPlantRequest plant) throws IOException, HTTPClientException {
+    public void create(String token, NewPlantRequest plant) throws IOException, HTTPException {
         byte[] input = new ObjectMapper().writeValueAsBytes(plant);
-        httpClient.request("POST", Joiner.on("/").join("api", token, "plant").toString(), input);
+        httpClient.request(HTTPMethod.POST, Joiner.on("/").join("api", token, "plant").toString(), input);
     }
 }

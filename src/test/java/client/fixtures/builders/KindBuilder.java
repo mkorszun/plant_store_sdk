@@ -1,7 +1,7 @@
-package model.builders;
+package client.fixtures.builders;
 
-import model.KindFixture;
-import model.TreatmentFixture;
+import client.fixtures.KindFixture;
+import client.fixtures.TreatmentFixture;
 import org.json.simple.JSONObject;
 
 public class KindBuilder {

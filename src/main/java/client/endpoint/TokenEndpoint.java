@@ -1,9 +1,10 @@
 package client.endpoint;
 
-import client.http.HTTPClient;
-import client.http.exception.HTTPClientException;
-import client.utils.QueryParamsBuilder;
-import model.Token;
+import client.model.Token;
+import com.okrest.http.HTTPClient;
+import com.okrest.http.HTTPException;
+import com.okrest.http.HTTPMethod;
+import com.okrest.utils.QueryParamsBuilder;
 
 import java.io.IOException;
 
@@ -17,10 +18,10 @@ public class TokenEndpoint extends Endpoint {
         super(client);
     }
 
-    public Token getToken(String email, String password) throws IOException, HTTPClientException {
+    public Token getToken(String email, String password) throws IOException, HTTPException {
         QueryParamsBuilder builder = new QueryParamsBuilder();
         builder.set("email", email).set("password", password);
-        byte[] body = httpClient.request("GET", "api/token", builder.build());
+        byte[] body = httpClient.request(HTTPMethod.GET, "api/token", builder.build());
         return mapper.readValue(body, Token.class);
     }
 }

@@ -25,21 +25,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.11</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>1.2.1</version>
+            <groupId>com.okrest</groupId>
+            <artifactId>okrest</artifactId>
+            <version>0.0.3</version>
         </dependency>
 
         <dependency>
@@ -68,6 +56,7 @@
             <version>1.1.1</version>
             <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 
@@ -114,7 +103,7 @@
                     <aggregate>true</aggregate>
                     <instrumentation>
                         <ignores>
-                            <ignore>model.*</ignore>
+                            <ignore>client.fixtures.*</ignore>
                         </ignores>
                     </instrumentation>
                     <check/>
@@ -139,5 +128,12 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <repositories>
+        <repository>
+            <id>plant_store_sdk_repo</id>
+            <url>https://github.com/mkorszun/okrest/raw/master/repo</url>
+        </repository>
+    </repositories>
 
 </project>

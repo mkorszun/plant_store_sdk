@@ -1,4 +1,4 @@
-package client.request;
+package client.fixtures;
 
 import org.json.simple.JSONObject;
 

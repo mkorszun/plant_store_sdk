@@ -1,13 +1,13 @@
 package client.endpoint;
 
 import client.ClientTest;
-import client.http.HTTPClient;
-import client.http.exception.HTTPClientException;
+import client.fixtures.NewPlantRequestFixture;
+import client.fixtures.PlantFixture;
+import client.model.Plant;
 import client.request.NewPlantRequest;
-import client.request.NewPlantRequestFixture;
 import com.github.restdriver.clientdriver.ClientDriverRequest;
-import model.Plant;
-import model.PlantFixture;
+import com.okrest.http.HTTPClient;
+import com.okrest.http.HTTPException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Assert;
@@ -16,20 +16,20 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 
+import static client.fixtures.builders.KindBuilder.buildKind;
 import static java.util.Arrays.asList;
-import static model.builders.KindBuilder.buildKind;
 
 public class PlantEndpointTest extends ClientTest {
 
     @Test
-    public void readPlantEmpty() throws IOException, HTTPClientException {
+    public void readPlantEmpty() throws IOException, HTTPException {
         setupDriver("/api/123/plant/1", "null", 200, "application/json");
         Plant plant = new PlantEndpoint(new HTTPClient(driver.getBaseUrl())).read("123", 1);
         Assert.assertEquals(null, plant);
     }
 
     @Test
-    public void readPlant() throws IOException, HTTPClientException {
+    public void readPlant() throws IOException, HTTPException {
         JSONObject body = new PlantFixture().withId(1).withDescription("blabla").withName("rose").withKind(buildKind()).build();
         setupDriver("/api/123/plant/1", body.toJSONString(), 200, "application/json");
         Plant p = new PlantEndpoint(new HTTPClient(driver.getBaseUrl())).read("123", 1);
@@ -39,7 +39,7 @@ public class PlantEndpointTest extends ClientTest {
     }
 
     @Test
-    public void createPlant() throws IOException, HTTPClientException {
+    public void createPlant() throws IOException, HTTPException {
         String expectedBody = new NewPlantRequestFixture().withName("name").withDescription("desc").withKindId(1232131).build();
         setupDriver(ClientDriverRequest.Method.POST, "/api/123/plant", expectedBody, 201, "application/json");
         NewPlantRequest request = new NewPlantRequest("name", "desc", 1232131);
@@ -47,14 +47,14 @@ public class PlantEndpointTest extends ClientTest {
     }
 
     @Test
-    public void listPlantsEmpty() throws IOException, HTTPClientException {
+    public void listPlantsEmpty() throws IOException, HTTPException {
         setupDriver("/api/123/plant", "[]", 200, "application/json");
         List<Plant> plants = new PlantEndpoint(new HTTPClient(driver.getBaseUrl())).list("123");
         Assert.assertEquals(0, plants.size());
     }
 
     @Test
-    public void listPlants() throws IOException, HTTPClientException {
+    public void listPlants() throws IOException, HTTPException {
 
         JSONObject p1 = new PlantFixture().withId(1).withDescription("blabla").withName("rose").withKind(buildKind()).build();
         JSONObject p2 = new PlantFixture().withId(2).withDescription("blabla2").withName("rose2").withKind(buildKind()).build();

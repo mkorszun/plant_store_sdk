@@ -1,11 +1,11 @@
 package client.endpoint;
 
 import client.ClientTest;
-import client.http.HTTPClient;
-import client.http.exception.HTTPClientException;
-import model.ErrorFixture;
-import model.Kind;
-import model.builders.KindBuilder;
+import client.fixtures.ErrorFixture;
+import client.fixtures.builders.KindBuilder;
+import client.model.Kind;
+import com.okrest.http.HTTPClient;
+import com.okrest.http.HTTPException;
 import org.json.simple.JSONArray;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,8 +18,8 @@ import static java.util.Arrays.asList;
 public class KindEndpointTest extends ClientTest {
 
     @Test
-    public void testListKindsError() throws IOException, HTTPClientException {
-        exception.expect(HTTPClientException.class);
+    public void testListKindsError() throws IOException, HTTPException {
+        exception.expect(HTTPException.class);
         exception.expectMessage("invalid_token");
         String body = new ErrorFixture().withReason("invalid_token").build();
         setupDriver("/api/123456/kind", body, 401, "application/json");
@@ -27,7 +27,7 @@ public class KindEndpointTest extends ClientTest {
     }
 
     @Test
-    public void testListKindsOK() throws IOException, HTTPClientException {
+    public void testListKindsOK() throws IOException, HTTPException {
 
         String body = JSONArray.toJSONString(asList(KindBuilder.buildKind()));
         setupDriver("/api/123456/kind", body, 200, "application/json");

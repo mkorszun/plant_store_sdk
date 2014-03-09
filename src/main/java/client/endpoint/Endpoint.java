@@ -1,6 +1,6 @@
 package client.endpoint;
 
-import client.http.HTTPClient;
+import com.okrest.http.HTTPClient;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class Endpoint {
