@@ -9,7 +9,7 @@ public class Endpoint {
     protected ObjectMapper mapper;
 
     protected Endpoint() {
-        this.httpClient = new HTTPClient();
+        this.httpClient = new HTTPClient("https://staging-plantstore.cloudcontrolapp.com");
         this.mapper = new ObjectMapper();
     }
 
